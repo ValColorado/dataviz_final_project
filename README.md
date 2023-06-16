@@ -1,8 +1,8 @@
 # Data Visualization and Reproducible Research
 
-> Firstname Lastname. 
+> Valentina Colorado 
 
-Learn more about me in my [GitHub profile page](https://github.com/reiminer). 
+You can learn more about me on my [GitHub profile page](https://github.com/ValColorado). 
 
 
 The following is a sample of products created during the _"Data Visualization and Reproducible Research"_ course.
@@ -10,7 +10,7 @@ The following is a sample of products created during the _"Data Visualization an
 
 ## Project 01
 
-In the `project_01/` folder you can find... _[add short description of your revised project here]_
+In the `project_01/` folder, you can find an analysis of rat sightings in New York City from 2015 - 2017
 
 **Sample data visualization:** 
 
@@ -20,7 +20,7 @@ _[include your favorite visualization from this project here]_
 
 ## Project 02
 
-In this project, I explored ... _[short description of your revised project goes here]_ Find the code and report in the `project_02/` folder.
+In this project, I explored how American runners did in the 2017 Boston Marathon. Find the code and report in the `project_02/` folder.
 
 **Sample data visualization:** 
 
