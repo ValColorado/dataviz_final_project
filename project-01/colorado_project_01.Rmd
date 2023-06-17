@@ -1,0 +1,184 @@
+---
+title: "Mini-Project 01"
+output: 
+  html_document:
+    keep_md: true
+    toc: true
+    toc_float: true
+---
+
+# Data Visualization Project 01
+
+First I want to save the world cup matches csv into my data folder by using the `readr` package
+```{r}
+library(tidyverse)
+library(scales)
+library(ggthemes)
+library(lubridate)
+
+```
+
+# Data Exploration 
+Now that we've downloaded the data we can start data exploration! 
+
+
+```{r}
+new_file_path <- "../data/rats_nyc.csv"
+```
+
+```{r}
+rats <- read_csv(new_file_path)
+```
+
+```{r}
+rats
+```
+To make it easier to maniuplate the sightings weekday column I am going to convert created_date that's already type of <S3: POSIXct> into a weekday by using the function wday from the `lubridate` package and then I'll save it into the sighting weekday column
+
+```{r}
+rats$sighting_weekday <-wday(rats$created_date,label = T, abbr = F)
+```
+
+```{r}
+rats
+```
+
+
+```{r}
+rats %>% 
+  group_by(sighting_weekday, borough) %>% 
+  count() %>% 
+  arrange(desc(n))
+```
+which day of the week has the most rat sightings
+
+```{r}
+dotw <- rats %>% 
+  group_by(sighting_weekday,borough) %>% 
+  count() %>% 
+  na.omit() %>% 
+  arrange(desc(n))
+```
+
+
+
+```{r}
+rats_daily <- ggplot(data = dotw, mapping = aes(x = sighting_weekday, y= n))+
+  geom_col()+
+  labs(title = "Rat Sightings Per Day")+
+   ylab("Amount of sightings")+
+   xlab("")+
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+  theme_bw()+ 
+  theme(panel.grid =  element_blank())
+
+```
+
+
+```{r}
+rats_daily
+```
+
+This shows how often rat sightings are reported throughout the week with wednesday having the most sightings. It makes sense that Wednesday has the most sightings since its the middle of the week and people are typically out more.
+
+I want to take this visualization further and see if we can split it up by boruough 
+
+```{r}
+#ggsave("rat_sightings_daily.jpg", plot = rats_daily, dpi = 300)
+
+```
+
+
+```{r}
+rat_borough <- ggplot(data = dotw, mapping = aes(x= sighting_weekday, y=n))+
+  geom_col()+
+  facet_wrap(~ borough, scales = "free_x")+
+  labs(title = "Rat Sightings Per Day")+
+  ylab("sightings reported in thousands")+
+  xlab("")+
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+   theme_bw()+
+  theme(axis.title.x = element_text(hjust = 0),axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+ 
+```
+
+```{r}
+rat_borough
+```
+It was interesting to see the breakdown of the sightings per boroughs. Here we can see that Brooklyn has the most rat sightins 
+
+
+```{r}
+#ggsave("rat_sightings_borough.jpg", plot = rat_borough, width = 8, height = 8, dpi = 300)
+
+```
+
+
+Just taking a quick look at the data I see a lot of the reports come from "family buildings" how much sightings were reported per location 
+
+```{r}
+location_rat <- rats %>% 
+   filter(location_type != "Other (Explain Below)") %>% 
+  group_by(location_type) %>% 
+  count() %>% 
+  na.omit()
+
+```
+
+```{r}
+location_rat
+```
+
+
+```{r}
+rat_lollipop <-ggplot(data =location_rat, mapping = aes(x=
+location_type, y= n))+
+   geom_pointrange(aes(ymin=0, ymax=n))+
+  labs(title = "Number of Rat Sightings Per Location")+
+  ylab("sightings reported in thousands")+
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+```
+
+```{r}
+rat_lollipop
+```
+In this "lollipop" grpah we see that the highest reported numbers were in family apartment buildings. 
+
+```{r}
+#ggsave("rat_sightings_perLocation.jpg", plot = rat_lollipop, width = 8, height = 8, dpi = 300)
+
+```
+
+
+Of all the sighitings in a family building how many were closed
+```{r}
+location_rat <-rats %>% 
+  group_by(location_type,status) %>% 
+  filter(location_type != "Other (Explain Below)") %>% 
+  count() %>% 
+  na.omit()
+location_rat
+```
+
+```{r}
+rats_status <- ggplot(data =location_rat, mapping =aes(x = location_type, y = n, fill = status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Location Type", y = "Amount Reported", fill = "Status of Report") +
+  ggtitle("Status of Report ") +
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+```
+
+```{r}
+rats_status
+```
+Because most of the sightings were in family buildings I was curious to see how many of those sightingers were closed. It was nice to see that the majority of the sightings were close but there was still a large amount pending which is concerning.
+
+```{r}
+#ggsave("status_report.jpg", plot = rats_status, width = 8, height = 8, dpi = 300)
+
+```
+
