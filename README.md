@@ -23,11 +23,7 @@ In this project, I explored how American runners did in the 2017 Boston Marathon
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://raw.githubusercontent.com/reisanar/dataviz_final_project/main/figures/fl_higher_ed.png" width="80%" height="80%">
-
-(you can place your figures in the `figures/` folder and use the `![](path_to_picture)` option to add the pictures here)
-
+![figure 1.2](figures/map_interactive.jpg)
 
 ## Project 03
 
