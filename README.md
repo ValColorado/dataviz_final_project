@@ -14,8 +14,7 @@ In the `project_01/` folder, you can find an analysis of rat sightings in New Yo
 
 **Sample data visualization:** 
 
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/echarts.png" width="70%" height="70%">
+![figure 1.1](figures/rat_sightings_borough.jpg)
 
 
 ## Project 02
