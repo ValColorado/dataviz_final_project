@@ -9,7 +9,7 @@ output:
 
 # Data Visualization Project 01: Rat Sightings NYC 2015-2017
 
-![](https://media.giphy.com/media/3oEdv9pgtUVVYdpaY8/giphy.gif)
+![rats nyc](https://media.giphy.com/media/3oEdv9pgtUVVYdpaY8/giphy.gif)
 
 ## Dataset Overview
 
