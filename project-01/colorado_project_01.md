@@ -19,7 +19,7 @@ This project is to understand rat sightings in New York better. Originally I wan
 
 First, I wanted to see which boroughs had the most rat sightings. To better visualize this (figure 1.1), I used the `facet_wrap` function to give the reader a better breakdown of all the boroughs and the number of daily sightings.
 
-![figure 1.1](../figures/rat_sightings_borough.jpg){width="800"}
+![figure 1.1](../figures/rat_sightings_borough.jpg){width="500"}
 
 I was able to learn more on how to scale my x and y labels so no information is cut off.
 
@@ -27,11 +27,11 @@ I was able to learn more on how to scale my x and y labels so no information is 
 
 After seeing the amount of sightings per the bouroughs I wanted to show how many many of those affected "family" buildings (figure 1.2).
 
-![figure 1.2](../figures/rat_sightings_perLocation.jpg){width="800"}
+![figure 1.2](../figures/rat_sightings_perLocation.jpg){width="500"}
 
 To visualize this, I used a "lollipop" chart to give the reader a sense of how many reports were from family buildings.
 
-![figure 1.3](../figures/status_report.jpg){width="800"}
+![figure 1.3](../figures/status_report.jpg){width="500"}
 
 Since most were residential locations, I used a grouped bar chart to see if the status of those rat sightings was closed or still pending figure 1.3. Although there were a lot of reports, it was nice to see that most of them were "closed."
 
