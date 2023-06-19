@@ -27,13 +27,9 @@ In this project, I explored how American runners did in the 2017 Boston Marathon
 
 ## Project 03
 
-In this project, I explored ... _[short description of the data visualizations you for this part of the project produced goes here]_
+In this project, I explored music lyrics from the 2015 Billboard Top 100 Hit songs. Find the code and report in the project_03/ folder.
 
-**Sample data visualization:** 
-
-_[include your favorite visualization from this project here]_
-<img src="https://github.com/reisanar/figs/raw/master/concrete_density.png" width="80%" height="80%">
-
+![figure 1.3](figures/wordmap.png)
 
 ### Moving Forward
 
