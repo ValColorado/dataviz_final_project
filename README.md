@@ -23,7 +23,7 @@ In this project, I explored how American runners did in the 2017 Boston Marathon
 
 **Sample data visualization:** 
 
-![figure 1.2](figures/map_interactive.jpg)
+![figure 1.2](figures/map.jpg)
 
 ## Project 03
 
