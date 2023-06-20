@@ -7,8 +7,7 @@ output:
     toc_float: true
 ---
 
-# Data Visualization Project 02
-
+# Data Visualization Project 02: Finishers of the Boston Marathon of 2017
 
 # Data Wrangling
 
@@ -28,6 +27,7 @@ race <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/mar
 ```{r}
 race
 ```
+
 ```{r}
  race <- race %>% 
   filter(Country =="USA")  %>% 
@@ -47,7 +47,6 @@ colnames(race) <- gsub("\\s", "_", colnames(race))
 race <- rename(race, genders = `M/F`)
 ```
 
-
 ```{r}
 avg_time <-race %>% 
   group_by(Age) %>% 
@@ -57,8 +56,8 @@ avg_time <-race %>%
 avg_time
 
 ```
-Here is where I group by age and find the average overall time for each age group.
 
+Here is where I group by age and find the average overall time for each age group.
 
 ```{r}
 avg_time_plot<-
@@ -86,7 +85,8 @@ avg_time_plot
 
 Here we can see that 28-38 year olds typically have the quickest marathon race times. It was interesting to see the 84 year old finisher! I can't imagine running for 6 hours a 25 year old.
 
-After seeing this breakdown I wanted to see how different the average finish times were for males and females 
+After seeing this breakdown I wanted to see how different the average finish times were for males and females
+
 ```{r}
 avg_time_gender <- race %>% 
   group_by(Age,genders) %>% 
@@ -114,7 +114,9 @@ avg_time_gender_plot<-ggplotly(avg_time_gender_plot)%>%
   layout(width = 950)  # Adjust the width value
 
 ```
+
 This graph better visualizes the average finish time for males and females. It was interesting to see the majority of men finish under 4 hours between the age of 18-53 while most females average just over 4 hours
+
 ```{r}
 #htmlwidgets::saveWidget(avg_time_gender_plot, "fancy_avg_time_gender_plot.html")
 ```
@@ -128,7 +130,7 @@ world_shapes <- read_sf("spatial-data/ne_50m_admin_1_states_provinces/ne_50m_adm
 
 ```
 
-Since `world_shapes` and `race` both have state names abbreviated i will rename state to match postal so i am able to join the tables 
+Since `world_shapes` and `race` both have state names abbreviated i will rename state to match postal so i am able to join the tables
 
 ```{r}
 race <- rename(race, postal = `State`)
@@ -143,7 +145,8 @@ race %>%
   arrange(n)
 ```
 
-There are other countries listed I just want to focus on the avg run time per state in the USA  
+There are other countries listed I just want to focus on the avg run time per state in the USA
+
 ```{r}
 avg_state <- race %>% 
   filter(Country =="USA")  %>% 
@@ -160,36 +163,34 @@ avg_state %>%
   arrange()
 ```
 
-Leaving out american territories and military bases 
+Leaving out american territories and military bases
+
 ```{r}
 avg_state <- subset(avg_state, !(postal %in% c("AA", "AE","AP","MH","GU","PR","VI","DC","AK","HI")))
 
 ```
 
 Changing the shapes dataset to only have USA
-  
+
 ```{r}
 usa_shapes <- world_shapes %>% 
   filter(admin =="United States of America")
 ```
-  
 
 ```{r}
 #join the two 
 usa_shapes<-usa_shapes %>% 
   left_join(avg_state, by="postal")
 ```
-  
+
 ```{r}
 usa_shapes <- usa_shapes %>% 
   select(postal,avg_overall_time)  %>% 
   na.omit()
 ```
 
+This map shows the average finish time for each state. It showed Alaska as the state with the quickest time.
 
-
-
-This map shows the average finish time for each state. It showed Alaska as the state with the quickest time. 
 ```{r}
 map_interactive <- ggplot() +
   geom_sf(data = usa_shapes, aes(fill = avg_overall_time, text = paste("State: ", postal)),
@@ -208,7 +209,7 @@ map_interactive <- ggplotly(map_interactive)
 map_interactive
 ```
 
-This map shows how the average finishing time for each state. I wanted an interactive map so when you hovered over each state you know what state it is plus that's specific's state average finish time. This dataset was from the Boston Marathon I was kind of surprised Massachusetts didn't have a quicker finish time.After looking into why the timing was so slow, i learned it was because this state had the most registered runners at 4568 which would have an effect on the average.This does not include Hawaii and Alaska 
+This map shows how the average finishing time for each state. I wanted an interactive map so when you hovered over each state you know what state it is plus that's specific's state average finish time. This dataset was from the Boston Marathon I was kind of surprised Massachusetts didn't have a quicker finish time.After looking into why the timing was so slow, i learned it was because this state had the most registered runners at 4568 which would have an effect on the average.This does not include Hawaii and Alaska
 
 ```{r}
 ggsave("map_interactive.jpg", plot = map_interactive, dpi = 300)
@@ -218,9 +219,6 @@ ggsave("map_interactive.jpg", plot = map_interactive, dpi = 300)
 ```{r}
 #htmlwidgets::saveWidget(map_interactive, "fancy_map_interactive_plot.html")
 ```
-
-
-
 
 ```{r}
 race_usa <- race %>% 
@@ -237,7 +235,6 @@ race_usa <- subset(race_usa, !(postal %in% c("AA", "AE","AP","MH","GU","PR","VI"
 race_usa
 ```
 
-
 ```{r}
 race_model <-ggplot(race_usa, aes(x = Age, y = avg_overall_time)) +
   geom_point(alpha = 0.09) +
@@ -252,9 +249,11 @@ race_model <-ggplot(race_usa, aes(x = Age, y = avg_overall_time)) +
 theme_light()
 
 ```
+
 ```{r}
 race_model
 ```
+
 Since my earlier visualizations focused on age and race time, I decided to model the relationship between age and race time for American racers. Since I learned more about colors I changed the default blue to the official blue Boston color `#3B8DBD`
 
 ```{r}
