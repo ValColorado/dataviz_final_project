@@ -28,28 +28,6 @@ library(plotly)
 race <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/marathon_results_2017.csv")
 ```
 
-``` r
-race
-```
-
-```         
-## # A tibble: 26,410 × 22
-##    Bib   Name    Age `M/F` City  State Country `5K`   `10K` `15K` `20K` Half    
-##    <chr> <chr> <dbl> <chr> <chr> <chr> <chr>   <time> <chr> <chr> <chr> <time>  
-##  1 11    Kiru…    24 M     Keri… <NA>  KEN     15'25" 0:30… 0:45… 1:01… 01:04:35
-##  2 17    Rupp…    30 M     Port… OR    USA     15'24" 0:30… 0:45… 1:01… 01:04:35
-##  3 23    Osak…    25 M     Mach… <NA>  JPN     15'25" 0:30… 0:45… 1:01… 01:04:36
-##  4 21    Biwo…    32 M     Mamm… CA    USA     15'25" 0:30… 0:45… 1:01… 01:04:45
-##  5 9     Cheb…    31 M     Mara… <NA>  KEN     15'25" 0:30… 0:45… 1:01… 01:04:35
-##  6 15    Abdi…    40 M     Phoe… AZ    USA     15'25" 0:30… 0:45… 1:01… 01:04:35
-##  7 63    Maiy…    33 M     Colo… CO    USA     15'25" 0:30… 0:45… 1:01… 01:04:36
-##  8 7     Sefi…    28 M     Addi… <NA>  ETH     15'24" 0:30… 0:46… 1:02… 01:06:04
-##  9 18    Pusk…    27 M     Euge… OR    USA     15'24" 0:30… 0:45… 1:01… 01:04:53
-## 10 20    Ward…    28 M     Kays… UT    USA     15'25" 0:30… 0:45… 1:01… 01:04:53
-## # … with 26,400 more rows, and 10 more variables: `25K` <time>, `30K` <time>,
-## #   `35K` <time>, `40K` <time>, Pace <time>, `Proj Time` <chr>,
-## #   `Official Time` <time>, Overall <dbl>, Gender <dbl>, Division <dbl>
-```
 
 For this analysis I am focusing on US racers so I need to filter out the other countries
 ``` r
@@ -82,22 +60,7 @@ avg_time <-race %>%
 avg_time
 ```
 
-```         
-## # A tibble: 66 × 2
-##      Age avg_overall_time
-##    <dbl>            <dbl>
-##  1    18             4.30
-##  2    19             4.30
-##  3    20             3.97
-##  4    21             3.84
-##  5    22             3.97
-##  6    23             3.92
-##  7    24             3.98
-##  8    25             3.91
-##  9    26             3.83
-## 10    27             3.94
-## # … with 56 more rows
-```
+
 
 ## Interactive Plot
 
