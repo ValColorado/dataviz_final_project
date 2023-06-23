@@ -31,6 +31,10 @@ In this project, I explored music lyrics from the 2015 Billboard Top 100 Hit son
 
 ![](figures/wordmap.png)
 
+## Running the file
+
+After you've cloned the repo open the `dataviz_final_project.Rproj` file. This will open up the project work space. After you've opened the file you can go into any project sub folder, and knit the .RMD file to see the source code. All the .MD files are files that have my analysis. 
+
 ### Moving Forward
 
 Throughout this course I was able to learn a lot about data visualization and reproducible research. At each project I was able to learn a lot and improve. My biggest takeaway from the first project was to make sure the x axis labels when it came to days of the week were in order. Project 2 was my favorite and I was able to learn so much about spatial visualizations and focusing on one subset to create a better story line to understand the data better. Project 3 was the most challenging. Trying to recreate the visualizations was hard because I had to look at all the small details to make sure it was right. In the future I will continue to incorporate all the lessons I learned on good story telling with data visualizations. I am also looking forward to using Github more for more collaborative work!
