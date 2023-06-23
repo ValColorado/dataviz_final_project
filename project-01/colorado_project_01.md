@@ -17,23 +17,120 @@ This project is to understand rat sightings in New York better. Originally I wan
 
 ## Rat Sightings Per Day
 
-First, I wanted to see which boroughs had the most rat sightings. To better visualize this (figure 1.1), I used the `facet_wrap` function to give the reader a better breakdown of all the boroughs and the number of daily sightings.
 
-![figure 1.1](../figures/rat_sightings_borough.jpg){width="500"}
+### Data Exploration 
+Now that we've downloaded the data we can start data exploration! 
 
-I was able to learn more on how to scale my x and y labels so no information is cut off.
+
+```r
+new_file_path <- "../data/rats_nyc.csv"
+```
+
+```r
+rats <- read_csv(new_file_path)
+```
+
+To make it easier to maniuplate the sightings weekday column I am going to convert created_date that's already type of <S3: POSIXct> into a weekday by using the function wday from the `lubridate` package and then I'll save it into the sighting weekday column
+
+```r
+rats$sighting_weekday <-wday(rats$created_date,label = T, abbr = F)
+```
+
+```r
+rats %>% 
+  group_by(sighting_weekday, borough) %>% 
+  count() %>% 
+  arrange(desc(n))
+```
+which day of the week has the most rat sightings
+
+```r
+dotw <- rats %>% 
+  group_by(sighting_weekday,borough) %>% 
+  count() %>% 
+  na.omit() %>% 
+  arrange(desc(n))
+```
+
+
+```r
+rat_borough <- ggplot(data = dotw, mapping = aes(x= sighting_weekday, y=n))+
+  geom_col()+
+  facet_wrap(~ borough, scales = "free_x")+
+  labs(title = "Rat Sightings Per Day")+
+  ylab("sightings reported in thousands")+
+  xlab("")+
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+   theme_bw()+
+  theme(axis.title.x = element_text(hjust = 0),axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+ 
+```
+
+Now that we have seperated the rat sightings out for each day of the week. I wanted to see which boroughs had the most rat sightings. To better visualize this I was used the `facet_wrap` function to give the reader a better breakdown of all the boroughs and the number of daily sightings. Figure 1.1 shows the results 
+
+
+
+![figure 1.1](../figures/rat_sightings_borough.jpg)
+
+I was able to learn more on how to scale my x and y labels so no information is cut off. I also learned that its important to have the weekdays in order to better show off the information.
 
 ## Rat Sighting Locations
 
-After seeing the amount of sightings per the bouroughs I wanted to show how many many of those affected "family" buildings (figure 1.2).
+After seeing the amount of sightings per the boroughs I wanted to show how many many of those affected "family" buildings (figure 1.2).
+Just taking a quick look at the data I see a lot of the reports come from "family buildings" how much sightings were reported per location 
 
-![figure 1.2](../figures/rat_sightings_perLocation.jpg){width="500"}
+```r
+location_rat <- rats %>% 
+   filter(location_type != "Other (Explain Below)") %>% 
+  group_by(location_type) %>% 
+  count() %>% 
+  na.omit()
 
-To visualize this, I used a "lollipop" chart to give the reader a sense of how many reports were from family buildings.
+```
 
-![figure 1.3](../figures/status_report.jpg){width="500"}
+Using the `geom_pointrange` function I made a "lollipop" chart to better visualize the amount of reports that came from family buildings.
 
-Since most were residential locations, I used a grouped bar chart to see if the status of those rat sightings was closed or still pending figure 1.3. Although there were a lot of reports, it was nice to see that most of them were "closed."
+```r
+rat_lollipop <-ggplot(data =location_rat, mapping = aes(x=
+location_type, y= n))+
+   geom_pointrange(aes(ymin=0, ymax=n))+
+  labs(title = "Number of Rat Sightings Per Location")+
+  ylab("sightings reported in thousands")+
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+```
+
+
+![figure 1.2](../figures/rat_sightings_perLocation.jpg)
+
+
+## Status of Report 
+
+Since most were residential locations, I used a grouped bar chart to see if the status of those rat sightings was closed or still pending 
+
+```r
+location_rat <-rats %>% 
+  group_by(location_type,status) %>% 
+  filter(location_type != "Other (Explain Below)") %>% 
+  count() %>% 
+  na.omit()
+location_rat
+```
+I want a better overall view of the data and since there isn't any explaination for the "other" locations I removed them 
+
+```r
+rats_status <- ggplot(data =location_rat, mapping =aes(x = location_type, y = n, fill = status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Location Type", y = "Amount Reported", fill = "Status of Report") +
+  ggtitle("Status of Report ") +
+  scale_y_continuous(labels = label_number(suffix = "K", scale = 1e-3))+
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), panel.grid =  element_blank())
+```
+![figure 1.3](../figures/status_report.jpg)
+Figure 1.3 shows that although there were a lot of reports the majority of them have been closed! 
+
 
 ## Key Takeaways
 
