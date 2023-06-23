@@ -51,16 +51,19 @@ race
 ## #   `Official Time` <time>, Overall <dbl>, Gender <dbl>, Division <dbl>
 ```
 
+For this analysis I am focusing on US racers so I need to filter out the other countries
 ``` r
  race <- race %>% 
   filter(Country =="USA")  %>% 
   na.omit()
 ```
 
+Now that its racers from the states I need to filter out american territories 
 ``` r
 race <- subset(race, !(State %in% c("AA", "AE","AP","MH","GU","PR","VI","DC")))
 ```
 
+To make it easier to manipulate the columns I added a "_" where there was white space and I renamed "M/F" to genders
 ``` r
 colnames(race) <- gsub("\\s", "_", colnames(race))
 ```
@@ -69,6 +72,7 @@ colnames(race) <- gsub("\\s", "_", colnames(race))
 race <- rename(race, genders = `M/F`)
 ```
 
+now that I have the racers I need to calculate the average run time in hours 
 ``` r
 avg_time <-race %>% 
   group_by(Age) %>% 
@@ -95,6 +99,8 @@ avg_time
 ## # … with 56 more rows
 ```
 
+## Interactive Plot
+
 Here is where I group by age and find the average overall time for each age group.
 
 ``` r
@@ -111,17 +117,9 @@ avg_time_plot<-
 avg_time_plot <- ggplotly(avg_time_plot)
 ```
 
-``` r
-#htmlwidgets::saveWidget(avg_time_plot, "fancy_plot_avg_time_plot.html")
-```
-
-``` r
-#ggsave("final.jpg", plot = avg_time_plot, width = 20, height = 9, dpi = 300)
-```
-
 ![](../figures/final.jpg)
 
-Here we can see that 28-38 year olds typically have the quickest marathon race times. It was interesting to see the 84 year old finisher! I can't imagine running for 6 hours a 25 year old.
+Here we can see that 28-38 year old typically have the quickest marathon race times. It was interesting to see the 84 year old finisher! I can't imagine running for 6 hours a 25 year old.
 
 After seeing this breakdown I wanted to see how different the average finish times were for males and females
 
@@ -158,6 +156,8 @@ ggplotly(avg_time_gender_plot)%>%
 
 This graph better visualizes the average finish time for males and females. It was interesting to see the majority of men finish under 4 hours between the age of 18-53 while most females average just over 4 hours
 
+## Spatial Visualization
+
 ``` r
 library(sf)
 ```
@@ -189,23 +189,6 @@ avg_state <- race %>%
 ``` r
 avg_state %>% 
   arrange()
-```
-
-```         
-## # A tibble: 50 × 2
-##    postal avg_overall_time
-##    <chr>             <dbl>
-##  1 AK                 3.42
-##  2 AL                 3.85
-##  3 AR                 3.86
-##  4 AZ                 3.88
-##  5 CA                 3.90
-##  6 CO                 3.72
-##  7 CT                 3.93
-##  8 DE                 3.76
-##  9 FL                 4.00
-## 10 GA                 3.94
-## # … with 40 more rows
 ```
 
 Leaving out american territories and military bases
@@ -249,13 +232,12 @@ map_interactive <- ggplot() +
 ggplotly(map_interactive)
 ```
 
-``` r
-ggsave("map_interactive.jpg", plot = map_interactive, width = 8, height = 8, dpi = 300)
-```
 
 ![](../figures/map.jpg)
 
 This map shows how the average finishing time for each state. I wanted an interactive map so when you hovered over each state you know what state it is plus that's specific's state average finish time. This dataset was from the Boston Marathon I was kind of surprised Massachusetts didn't have a quicker finish time. It was interesting to see how people from Alaska had the quickest average.
+
+## Model 
 
 ``` r
 race_usa <- race %>% 
@@ -270,24 +252,6 @@ race_usa <- race %>%
 ``` r
 race_usa <- subset(race_usa, !(postal %in% c("AA", "AE","AP","MH","GU","PR","VI","DC")))
 race_usa
-```
-
-```         
-## # A tibble: 2,151 × 3
-## # Groups:   postal [50]
-##    postal   Age avg_overall_time
-##    <chr>  <dbl>            <dbl>
-##  1 AK        24             3.20
-##  2 AK        26             2.68
-##  3 AK        27             3.50
-##  4 AK        28             3.34
-##  5 AK        29             3.70
-##  6 AK        30             2.64
-##  7 AK        31             2.86
-##  8 AK        32             2.67
-##  9 AK        35             3.37
-## 10 AK        36             3.11
-## # … with 2,141 more rows
 ```
 
 ``` r
@@ -308,14 +272,11 @@ theme_light()
 race_model
 ```
 
-```         
-## `geom_smooth()` using formula = 'y ~ x'
-```
-
-``` r
-#ggsave("race_model.png", plot = race_model, dpi = 300)
-```
-
 ![](colorado_project_02_files/figure-html/unnamed-chunk-32-1.png)
 
-Since my earlier visualizations focused on age and race time, I decided to model the relationship between age and race time for American racers. Since I learned more about colors I changed the default blue to the official blue Boston color `#3B8DBD`
+Since my earlier visualizations focused on age and race time, I decided to model the relationship between age and race time for American racers. This shows the race time gradually increases as the racers age increases which is expected. Since I learned more about colors I changed the default blue to the official blue Boston color `#3B8DBD`
+
+
+
+We've reached the end of the data visualization! 
+![](images/finishline.gif)

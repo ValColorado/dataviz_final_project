@@ -110,7 +110,7 @@ avg_time_gender_plot <- ggplot(data = avg_time_gender) +
 ```
 
 ```{r}
-avg_time_gender_plot<-ggplotly(avg_time_gender_plot)%>%
+ggplotly(avg_time_gender_plot)%>%
   layout(width = 950)  # Adjust the width value
 
 ```
