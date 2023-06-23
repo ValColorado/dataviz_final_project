@@ -61,7 +61,6 @@ avg_time
 ```
 
 
-
 ## Interactive Plot
 
 Here is where I group by age and find the average overall time for each age group.
@@ -79,6 +78,13 @@ avg_time_plot<-
 ``` r
 avg_time_plot <- ggplotly(avg_time_plot)
 ```
+
+
+```{r}
+#htmlwidgets::saveWidget(avg_time_plot, "fancy_plot_avg_time_plot.html")
+```
+
+Interactive plots are so powerful. Hovering over each data point shows us more information on each observation! In this example when you hover over you can see that the runner is 48 with an average run time of about 3.9 hours.All of these interactive graphs were saved in `../figures/html plots`
 
 ![](../figures/final.jpg)
 
@@ -235,7 +241,7 @@ theme_light()
 race_model
 ```
 
-![](colorado_project_02_files/figure-html/unnamed-chunk-32-1.png)
+![](../figures/race_model.png)
 
 Since my earlier visualizations focused on age and race time, I decided to model the relationship between age and race time for American racers. This shows the race time gradually increases as the racers age increases which is expected. Since I learned more about colors I changed the default blue to the official blue Boston color `#3B8DBD`
 
