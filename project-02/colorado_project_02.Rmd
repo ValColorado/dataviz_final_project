@@ -23,6 +23,10 @@ library(plotly)
 # Read the CSV file
 race <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/marathon_results_2017.csv")
 ```
+```{r}
+#write.csv(race, "../data/race.csv", row.names = FALSE)
+```
+
 
 ```{r}
 race
