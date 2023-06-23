@@ -30,7 +30,6 @@ sample_n(weather_tpa, 4)
 ## 4  2022     5    22          0          96       74     85
 ```
 
-See <https://www.reisanar.com/slides/relationships-models#10> for a reminder on how to use this type of dataset with the `lubridate` package for dates and times (example included in the slides uses data from 2016).
 
 Using the 2022 data:
 
@@ -139,7 +138,7 @@ Since this dataset is for Tampa Florida I wanted to see if a lollipop chart can 
 
 Review the set of slides (and additional resources linked in it) for visualizing text data: <https://www.reisanar.com/slides/text-viz#1>
 
-Using the billboard top 100 Lyrics I wanted to create a word map of the most used words - [Billboard Top 100 Lyrics](https://github.com/reisanar/datasets/blob/master/BB_top100_2015.csv)
+Using the billboard top 100 Lyrics I wanted to create a word map of the most used words based on the lyrics from Billboard Top 100  - [Billboard Top 100 Lyrics](https://github.com/reisanar/datasets/blob/master/BB_top100_2015.csv)
 
 First I need read in the data and save it
 
